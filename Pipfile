@@ -4,16 +4,24 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+autopep8 = "*"
+black = "*"
 
 [packages]
 django = "*"
 django-extensions = "*"
-django-debug-toolbar = "*"
 werkzeug = "*"
 django-environ = "*"
 psycopg2-binary = "*"
-django-on-heroku = "*"
-gunicorn = "*"
+djangorestframework = "*"
+djoser = "*"
+pillow = "*"
+boto3 = "*"
+django-storages = "*"
+django-cors-headers = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.11"
+
+[pipenv]
+allow_prereleases = true

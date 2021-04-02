@@ -15,17 +15,31 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import include, path
+from rest_framework import routers
+from core.views import (
+    QuestionViewSet,
+    AnswerViewSet,
+    AnswerDetailView,
+    AnswerAcceptView,
+    UserViewSet,
+)
+
+router = routers.DefaultRouter(trailing_slash=False)
+router.register("questions", QuestionViewSet)
+router.register("auth/users", UserViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-]
-
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
-
-        # For django versions before 2.0:
-        # url(r'^__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
+    path("", include(router.urls)),
+    path(
+        "questions/<int:question_id>/answers",
+        AnswerViewSet.as_view({"get": "list", "post": "create"}),
+        name="answer-list",
+    ),
+    path("answers/<int:pk>/accept", AnswerAcceptView.as_view(), name="answer-accept"),
+    path("answers/<int:pk>", AnswerDetailView.as_view(), name="answer-detail"),
+    path("admin/", admin.site.urls),
+    path("auth/", include("djoser.urls.authtoken")),
+    path("api-auth/", include("rest_framework.urls")),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
