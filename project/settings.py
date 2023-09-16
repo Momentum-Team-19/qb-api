@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "djoser",
     "corsheaders",
     "storages",
+    "drf_spectacular",
     # Project-specific
     "core",
 ]
@@ -150,6 +151,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.TokenAuthentication",
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -172,3 +174,10 @@ if env("USE_S3"):
     # To allow django-admin collectstatic to automatically put your static files in your bucket
     # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
     STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "QuestionBox API",
+    "DESCRIPTION": "Documentation for QuestionBox, an API to power a question and answer platform.",
+    "VERSION": "1.0.0",
+    "SWAGGER_UI_DIST": "//unpkg.com/swagger-ui-dist@5.7.1",
+}

@@ -19,6 +19,7 @@ pillow = "*"
 boto3 = "*"
 django-storages = "*"
 django-cors-headers = "*"
+drf-spectacular = "*"
 
 [requires]
 python_version = "3.11"
