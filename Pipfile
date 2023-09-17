@@ -11,7 +11,6 @@ pdbpp = "*"
 [packages]
 django = "*"
 django-extensions = "*"
-werkzeug = "*"
 django-environ = "*"
 psycopg2-binary = "*"
 djangorestframework = "*"
@@ -21,6 +20,8 @@ boto3 = "*"
 django-storages = "*"
 django-cors-headers = "*"
 drf-spectacular = "*"
+gunicorn = "*"
+whitenoise = "*"
 
 [requires]
 python_version = "3.11"

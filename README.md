@@ -1,6 +1,6 @@
 # QuestionBox API
 
-Documentation for endpoints in the QuestionBox API is available at https://questionbox-api.herokuapp.com/docs/
+Documentation for endpoints in the QuestionBox API is available at [https://qb.fly.dev/docs/](https://qb.fly.dev/docs/)
 
 ## What you can use this API to do
 
