@@ -181,3 +181,7 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
     "SWAGGER_UI_DIST": "//unpkg.com/swagger-ui-dist@5.7.1",
 }
+
+DJOSER = {
+    "SERIALIZERS": {"current_user": "core.serializers.UserSerializer"},
+}

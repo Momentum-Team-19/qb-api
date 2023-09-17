@@ -22,9 +22,11 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from core.views import (
     QuestionViewSet,
     AnswerViewSet,
+    AnswerListView,
     AnswerDetailView,
     AnswerAcceptView,
     UserViewSet,
+    BookmarkListCreateView,
 )
 
 router = routers.DefaultRouter(trailing_slash=False)
@@ -38,9 +40,12 @@ urlpatterns = [
         AnswerViewSet.as_view({"get": "list", "post": "create"}),
         name="answer-list",
     ),
+    path("answers/me", AnswerListView.as_view(), name="my-answers"),
     path("answers/<int:pk>/accept", AnswerAcceptView.as_view(), name="answer-accept"),
     path("answers/<int:pk>", AnswerDetailView.as_view(), name="answer-detail"),
+    path("bookmarks/", BookmarkListCreateView.as_view(), name="bookmarks-list"),
     path("admin/", admin.site.urls),
+    path("auth/", include("djoser.urls")),
     path("auth/", include("djoser.urls.authtoken")),
     path("api-auth/", include("rest_framework.urls")),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),

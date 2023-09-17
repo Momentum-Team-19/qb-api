@@ -25,3 +25,35 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class Bookmark(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bookmarks")
+    question = models.ForeignKey(
+        Question,
+        on_delete=models.CASCADE,
+        related_name="bookmarks",
+        null=True,
+        blank=True,
+    )
+    answer = models.ForeignKey(
+        Answer,
+        on_delete=models.CASCADE,
+        related_name="bookmarks",
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                check=(
+                    models.Q(question__isnull=False) & models.Q(answer__isnull=True)
+                    | models.Q(answer__isnull=False) & models.Q(question__isnull=True)
+                ),
+                name="one_of_two_fields_null_constraint",
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.user} bookmarks"
