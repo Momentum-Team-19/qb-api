@@ -12,7 +12,7 @@ from rest_framework.exceptions import PermissionDenied, ParseError
 from rest_framework.parsers import JSONParser, FileUploadParser
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from rest_framework import status, permissions
+from rest_framework import status, permissions, filters
 from djoser.views import UserViewSet as DjoserUserViewSet
 from djoser.conf import settings
 
@@ -35,6 +35,8 @@ class QuestionViewSet(viewsets.ModelViewSet):
 
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["@title", "@body"]
 
     def get_serializer_class(self):
         serializer_class_by_action = {
