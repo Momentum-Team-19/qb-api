@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Question, Answer, User, Bookmark
+from taggit.serializers import TagListSerializerField, TaggitSerializer
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
@@ -46,27 +47,32 @@ class AnswerWritableSerializer(serializers.ModelSerializer):
         fields = ["text", "author", "accepted"]
 
 
-class QuestionSerializer(serializers.ModelSerializer):
+class QuestionSerializer(TaggitSerializer, serializers.ModelSerializer):
     author = serializers.SlugRelatedField(read_only=True, slug_field="username")
     answers = AnswerSerializer(many=True, required=False)
+    tags = TagListSerializerField(read_only=True)
 
     class Meta:
         model = Question
-        fields = ["id", "title", "body", "author", "answers"]
+        fields = ["id", "title", "body", "author", "tags", "answers"]
 
 
-class QuestionWritableSerializer(serializers.ModelSerializer):
+class QuestionWritableSerializer(TaggitSerializer, serializers.ModelSerializer):
     author = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    tags = TagListSerializerField(required=False)
 
     class Meta:
         model = Question
-        fields = ["title", "body", "author"]
+        fields = ["title", "body", "author", "tags"]
 
 
 class QuestionNestedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ["id", "title"]
+        fields = [
+            "id",
+            "title",
+        ]
 
 
 class AnswerNestedSerializer(serializers.ModelSerializer):

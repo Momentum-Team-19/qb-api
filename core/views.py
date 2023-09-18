@@ -30,13 +30,14 @@ from .serializers import (
 
 class QuestionViewSet(viewsets.ModelViewSet):
     """
-    Handle retrieve, create, edit, and destroy for questions
+    Handle retrieve, create, edit, and destroy for questions.
+    Allow full-text search on title, body, and tags via ?search=term.
     """
 
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ["@title", "@body"]
+    search_fields = ["@title", "@body", "@tags__name"]
 
     def get_serializer_class(self):
         serializer_class_by_action = {

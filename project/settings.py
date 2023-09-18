@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "storages",
     "drf_spectacular",
+    "taggit",
     # Project-specific
     "core",
 ]
@@ -189,3 +190,5 @@ SPECTACULAR_SETTINGS = {
 DJOSER = {
     "SERIALIZERS": {"current_user": "core.serializers.UserSerializer"},
 }
+
+TAGGIT_CASE_INSENSITIVE = True
