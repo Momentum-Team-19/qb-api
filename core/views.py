@@ -26,6 +26,7 @@ from .serializers import (
     UserCreateSerializer,
     BookmarkListSerializer,
 )
+from .custom_permissions import IsAuthorOrReadOnly
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
@@ -38,6 +39,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ["@title", "@body", "@tags__name"]
+    permission_classes = [IsAuthorOrReadOnly]
 
     def get_serializer_class(self):
         serializer_class_by_action = {
