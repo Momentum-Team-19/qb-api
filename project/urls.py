@@ -25,13 +25,11 @@ from core.views import (
     AnswerListView,
     AnswerDetailView,
     AnswerAcceptView,
-    UserViewSet,
     BookmarkListCreateView,
 )
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register("questions", QuestionViewSet)
-router.register("auth/users", UserViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),

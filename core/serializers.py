@@ -12,7 +12,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["pk", "username", "photo"]
+        fields = ["pk", "username", "email", "photo"]
 
     def update(self, instance, validated_data):
         if "file" in self.initial_data:

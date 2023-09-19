@@ -129,43 +129,6 @@ class AnswerAcceptView(UpdateAPIView):
         return answer
 
 
-class UserViewSet(DjoserUserViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    parser_classes = [FileUploadParser, JSONParser]
-
-    @action(detail=True, methods=["put", "patch"])
-    def photo(self, request, id=None):
-        if "file" not in request.data:
-            raise ParseError("Missing file attachment")
-
-        file = request.data["file"]
-        user = self.get_object()
-
-        user.photo.save(file.name, file, save=True)
-
-        serializer = self.get_serializer(user)
-        return Response(serializer.data, status=201)
-
-    def get_object(self):
-        user_instance = get_object_or_404(self.get_queryset(), pk=self.kwargs["id"])
-        if self.request.user.pk != user_instance.pk:
-            raise PermissionDenied()
-        return user_instance
-
-    def get_parser_classes(self):
-        if "file" in self.request.data:
-            return [FileUploadParser]
-
-        return [JSONParser]
-
-    def get_serializer_class(self):
-        if self.action == "create":
-            return UserCreateSerializer
-
-        return super().get_serializer_class()
-
-
 class BookmarkListCreateView(ListCreateAPIView):
     serializer_class = BookmarkListSerializer
     permission_classes = [permissions.IsAuthenticated]
