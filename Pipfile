@@ -23,6 +23,7 @@ drf-spectacular = "*"
 gunicorn = "*"
 whitenoise = "*"
 django-taggit = "*"
+django-phonenumber-field = {extras = ["phonenumberslite"], version = "*"}
 
 [requires]
 python_version = "3.11"

@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "storages",
     "drf_spectacular",
     "taggit",
+    "phonenumber_field",
     # Project-specific
     "core",
 ]

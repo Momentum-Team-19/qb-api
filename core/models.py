@@ -1,10 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from taggit.managers import TaggableManager
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class User(AbstractUser):
     photo = models.ImageField(upload_to="user_profile_photos", null=True, blank=True)
+    phone = PhoneNumberField(blank=True, null=True)
 
 
 class Question(models.Model):
