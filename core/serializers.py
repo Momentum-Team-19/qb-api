@@ -6,13 +6,21 @@ from taggit.serializers import TagListSerializerField, TaggitSerializer
 class UserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("username", "email", "password")
+        fields = ("username", "email", "password", "first_name", "last_name", "phone")
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["pk", "username", "email", "photo"]
+        fields = [
+            "id",
+            "username",
+            "email",
+            "photo",
+            "phone",
+            "first_name",
+            "last_name",
+        ]
 
     def update(self, instance, validated_data):
         if "file" in self.initial_data:

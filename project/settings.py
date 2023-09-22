@@ -189,7 +189,11 @@ SPECTACULAR_SETTINGS = {
 }
 
 DJOSER = {
-    "SERIALIZERS": {"current_user": "core.serializers.UserSerializer"},
+    "SERIALIZERS": {
+        "current_user": "core.serializers.UserSerializer",
+        "user": "core.serializers.UserSerializer",
+        "user_create": "core.serializers.UserCreateSerializer",
+    },
 }
 
 TAGGIT_CASE_INSENSITIVE = True
