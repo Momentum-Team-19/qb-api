@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from pathlib import Path
+from corsheaders.defaults import default_headers
 
 import environ
 
@@ -161,6 +162,9 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "content-disposition",
+]
 
 MEDIA_URL = "/media/"
 MEDIA_DIR = BASE_DIR / "media"
@@ -175,11 +179,17 @@ if env("USE_S3"):
         "CacheControl": "max-age=86400",
     }
     AWS_DEFAULT_ACL = "public-read"
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-
+    STORAGES = {
+        "default": {"BACKEND": "storages.backends.s3.S3Storage"},
+        "staticfiles": {
+            "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+        },
+    }
+    # DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    # STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
     # To allow django-admin collectstatic to automatically put your static files in your bucket
-    # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
-    STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
+    # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#configuration-settings
+
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "QuestionBox API",
