@@ -135,3 +135,11 @@ class BookmarkListCreateView(ListCreateAPIView):
 
     def get_queryset(self):
         return Bookmark.objects.filter(user=self.request.user)
+
+
+class UserViewSet(DjoserUserViewSet):
+    def get_serializer_class(self, *args, **kwargs):
+        breakpoint()
+        if self.action == "create":
+            return UserCreateSerializer
+        return UserSerializer

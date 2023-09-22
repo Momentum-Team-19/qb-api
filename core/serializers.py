@@ -1,12 +1,21 @@
 from rest_framework import serializers
 from .models import Question, Answer, User, Bookmark
 from taggit.serializers import TagListSerializerField, TaggitSerializer
+from djoser.serializers import UserCreateSerializer as DjoserUserCreateSerializer
 
 
-class UserCreateSerializer(serializers.ModelSerializer):
+class UserCreateSerializer(DjoserUserCreateSerializer):
     class Meta:
         model = User
-        fields = ("username", "email", "password", "first_name", "last_name", "phone")
+        fields = (
+            "id",
+            "username",
+            "email",
+            "password",
+            "first_name",
+            "last_name",
+            "phone",
+        )
 
 
 class UserSerializer(serializers.ModelSerializer):
