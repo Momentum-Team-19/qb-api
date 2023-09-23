@@ -214,7 +214,7 @@ APPEND_SLASH = False
 if env("USE_SENTRY"):
     sentry_sdk.init(
         dsn=env("SENTRY_DSN"),
-        integrations=[DjangoIntegration()],
+        integrations=[DjangoIntegration(signals_spans=False)],
         # If you wish to associate users to errors (assuming you are using
         # django.contrib.auth) you may enable sending PII data.
         send_default_pii=True,
