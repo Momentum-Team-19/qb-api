@@ -41,19 +41,23 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class AnswerSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(read_only=True, slug_field="username")
+    author = serializers.SlugRelatedField(
+        read_only=True, slug_field="username")
+    question = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Answer
-        fields = ["id", "text", "author", "accepted"]
+        fields = ["id", "text", "author", "accepted", "question"]
 
 
 class AnswerDetailSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(read_only=True, slug_field="username")
+    author = serializers.SlugRelatedField(
+        read_only=True, slug_field="username")
+    question = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Answer
-        fields = ["id", "text", "accepted", "author"]
+        fields = ["id", "text", "accepted", "author", "question"]
 
 
 class AnswerWritableSerializer(serializers.ModelSerializer):
@@ -65,7 +69,8 @@ class AnswerWritableSerializer(serializers.ModelSerializer):
 
 
 class QuestionSerializer(TaggitSerializer, serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(read_only=True, slug_field="username")
+    author = serializers.SlugRelatedField(
+        read_only=True, slug_field="username")
     answers = AnswerSerializer(many=True, required=False)
     tags = TagListSerializerField(read_only=True)
 
