@@ -61,7 +61,8 @@ class QuestionViewSet(viewsets.ModelViewSet):
         if self.request.user.is_anonymous:
             content = {"reason": "You are not logged in"}
             return Response(content, status=status.HTTP_403_FORBIDDEN)
-        serializer = self.get_serializer(request.user.questions.all(), many=True)
+        serializer = self.get_serializer(
+            request.user.questions.all(), many=True)
         return Response(serializer.data)
 
 
@@ -104,6 +105,7 @@ class AnswerListView(ListAPIView):
 class AnswerDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Answer.objects.all()
     serializer_class = AnswerDetailSerializer
+    permissions_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         return self.queryset.filter(author=self.request.user)
