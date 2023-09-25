@@ -77,7 +77,7 @@ class AnswerWritableSerializer(serializers.ModelSerializer):
 
 
 class QuestionSerializer(TaggitSerializer, serializers.ModelSerializer):
-    author = author = UserNestedSerializer(read_only=True)
+    author = UserNestedSerializer(read_only=True)
     answers = AnswerSerializer(many=True, required=False)
     tags = TagListSerializerField(read_only=True)
 
