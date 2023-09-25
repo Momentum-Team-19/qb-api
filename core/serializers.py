@@ -40,9 +40,18 @@ class UserSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 
+class UserNestedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "username",
+            "photo",
+        ]
+
+
 class AnswerSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(
-        read_only=True, slug_field="username")
+    author = UserNestedSerializer(read_only=True)
     question = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
@@ -51,8 +60,7 @@ class AnswerSerializer(serializers.ModelSerializer):
 
 
 class AnswerDetailSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(
-        read_only=True, slug_field="username")
+    author = UserNestedSerializer(read_only=True)
     question = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
@@ -69,8 +77,7 @@ class AnswerWritableSerializer(serializers.ModelSerializer):
 
 
 class QuestionSerializer(TaggitSerializer, serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(
-        read_only=True, slug_field="username")
+    author = author = UserNestedSerializer(read_only=True)
     answers = AnswerSerializer(many=True, required=False)
     tags = TagListSerializerField(read_only=True)
 
