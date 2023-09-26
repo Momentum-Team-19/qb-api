@@ -117,8 +117,10 @@ class AnswerAcceptView(UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         answer = self.get_object()
-        answer.accepted = True
-        answer.save()
+        accepted_value = request.data.get("accepted", None)
+        if accepted_value is not None:
+            answer.accepted = accepted_value
+            answer.save()
         return Response(self.get_serializer(answer).data)
 
     def get_object(self):
