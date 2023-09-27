@@ -56,7 +56,13 @@ class Bookmark(models.Model):
                     | models.Q(answer__isnull=False) & models.Q(question__isnull=True)
                 ),
                 name="one_of_two_fields_null_constraint",
-            )
+            ),
+            models.UniqueConstraint(
+                fields=["user", "question"], name="unique_question_bookmark"
+            ),
+            models.UniqueConstraint(
+                fields=["user", "answer"], name="unique_answer_bookmark"
+            ),
         ]
 
     def __str__(self):

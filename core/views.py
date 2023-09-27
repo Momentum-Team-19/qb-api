@@ -154,7 +154,7 @@ class BookmarkListCreateView(ListCreateAPIView):
         except IntegrityError:
             raise serializers.ValidationError(
                 {
-                    "error": "To create a bookmark, a question id or an answer id has to be included in the body. It cannot reference both at the same time."
+                    "error": "To create a bookmark, a question id or an answer id has to be included in the body. It cannot reference both at the same time, and no duplicate bookmarks are allowed."
                 }
             )
 
