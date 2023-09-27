@@ -7,6 +7,7 @@ from rest_framework.generics import (
     UpdateAPIView,
     ListAPIView,
     ListCreateAPIView,
+    RetrieveAPIView,
 )
 from rest_framework.exceptions import PermissionDenied, ParseError
 from rest_framework.parsers import JSONParser, FileUploadParser
@@ -25,6 +26,7 @@ from .serializers import (
     UserSerializer,
     UserCreateSerializer,
     BookmarkListSerializer,
+    UserProfileSerializer,
 )
 from .custom_permissions import IsAuthorOrReadOnly
 
@@ -139,3 +141,13 @@ class BookmarkListCreateView(ListCreateAPIView):
 
     def get_queryset(self):
         return Bookmark.objects.filter(user=self.request.user)
+
+
+class ProfileDetailView(RetrieveAPIView):
+    """
+    Handle GET for user profiles.
+    """
+
+    queryset = User.objects.all()
+    serializer_class = UserProfileSerializer
+    lookup_field = "username"
