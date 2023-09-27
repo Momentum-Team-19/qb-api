@@ -118,26 +118,18 @@ class BookmarkListSerializer(serializers.ModelSerializer):
         model = Bookmark
         fields = ["question", "answer"]
 
-    def create(self, validated_data):
-        # Get the nested data for question and answer
-        question_data = validated_data.pop('question', None)
-        answer_data = validated_data.pop('answer', None)
 
-        # Initialize variables
-        question = None
-        answer = None
+class BookmarkCreateSerializer(serializers.ModelSerializer):
+    question = serializers.PrimaryKeyRelatedField(
+        queryset=Question.objects.all(), required=False
+    )
+    answer = serializers.PrimaryKeyRelatedField(
+        queryset=Answer.objects.all(), required=False
+    )
 
-        # Retrieve Question and Answer instances if they exist in the database
-        if question_data:
-            question = Question.objects.get(id=question_data['id'])
-        
-        if answer_data:
-            answer = Answer.objects.get(id=answer_data['id'])
-
-        # Create the Bookmark object
-        bookmark = Bookmark.objects.create(question=question, answer=answer, **validated_data)
-        
-        return bookmark
+    class Meta:
+        model = Bookmark
+        fields = ["question", "answer"]
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -157,6 +149,3 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "questions",
             "answers",
         ]
-
-    
-

@@ -1,6 +1,6 @@
 from .models import Question, Answer, User, Bookmark
-from django.contrib.auth.decorators import login_required
-from rest_framework import viewsets
+from django.db import IntegrityError
+from rest_framework import viewsets, serializers
 from rest_framework.generics import (
     get_object_or_404,
     RetrieveUpdateDestroyAPIView,
@@ -26,6 +26,7 @@ from .serializers import (
     UserSerializer,
     UserCreateSerializer,
     BookmarkListSerializer,
+    BookmarkCreateSerializer,
     UserProfileSerializer,
 )
 from .custom_permissions import IsAuthorOrReadOnly
@@ -141,6 +142,21 @@ class BookmarkListCreateView(ListCreateAPIView):
 
     def get_queryset(self):
         return Bookmark.objects.filter(user=self.request.user)
+
+    def get_serializer(self, *args, **kwargs):
+        if self.request.method == "POST":
+            return BookmarkCreateSerializer(*args, **kwargs)
+        return super().get_serializer(*args, **kwargs)
+
+    def perform_create(self, serializer):
+        try:
+            serializer.save(user=self.request.user)
+        except IntegrityError:
+            raise serializers.ValidationError(
+                {
+                    "error": "To create a bookmark, a question id or an answer id has to be included in the body. It cannot reference both at the same time."
+                }
+            )
 
 
 class ProfileDetailView(RetrieveAPIView):
