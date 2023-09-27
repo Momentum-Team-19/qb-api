@@ -26,6 +26,7 @@ from core.views import (
     AnswerDetailView,
     AnswerAcceptView,
     BookmarkListCreateView,
+    ProfileDetailView,
 )
 
 router = routers.DefaultRouter(trailing_slash=False)
@@ -46,6 +47,7 @@ urlpatterns = [
     path("auth/", include("djoser.urls")),
     path("auth/", include("djoser.urls.authtoken")),
     path("api-auth/", include("rest_framework.urls")),
+    path("profiles/<str:username>", ProfileDetailView.as_view(), name="profile-detail"),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "docs/",

@@ -117,3 +117,22 @@ class BookmarkListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bookmark
         fields = ["question", "answer"]
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    questions = QuestionNestedSerializer(many=True, read_only=True)
+    answers = AnswerNestedSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "username",
+            "email",
+            "photo",
+            "phone",
+            "first_name",
+            "last_name",
+            "questions",
+            "answers",
+        ]
