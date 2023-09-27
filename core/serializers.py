@@ -118,25 +118,6 @@ class BookmarkListSerializer(serializers.ModelSerializer):
         model = Bookmark
         fields = ["question", "answer"]
 
-
-class UserProfileSerializer(serializers.ModelSerializer):
-    questions = QuestionNestedSerializer(many=True, read_only=True)
-    answers = AnswerNestedSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = User
-        fields = [
-            "id",
-            "username",
-            "email",
-            "photo",
-            "phone",
-            "first_name",
-            "last_name",
-            "questions",
-            "answers",
-        ]
-
     def create(self, validated_data):
         # Get the nested data for question and answer
         question_data = validated_data.pop('question', None)
@@ -157,4 +138,25 @@ class UserProfileSerializer(serializers.ModelSerializer):
         bookmark = Bookmark.objects.create(question=question, answer=answer, **validated_data)
         
         return bookmark
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    questions = QuestionNestedSerializer(many=True, read_only=True)
+    answers = AnswerNestedSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "username",
+            "email",
+            "photo",
+            "phone",
+            "first_name",
+            "last_name",
+            "questions",
+            "answers",
+        ]
+
+    
 
