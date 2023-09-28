@@ -1,7 +1,7 @@
 from rest_framework import permissions
 
-class IsAuthorOrReadOnly(permissions.BasePermission):
 
+class IsAuthorOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
         # If it's a read-only method, allow access
         if request.method in permissions.SAFE_METHODS:
@@ -15,4 +15,3 @@ class IsAuthorOrReadOnly(permissions.BasePermission):
             return True
         # For other methods, only allow if user is the author
         return obj.author == request.user
-
