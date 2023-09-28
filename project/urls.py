@@ -41,7 +41,7 @@ urlpatterns = [
     ),
     path("answers/me", AnswerListView.as_view(), name="my-answers"),
     path("answers/<int:pk>/accept", AnswerAcceptView.as_view(), name="answer-accept"),
-    path("answers/<int:pk>", AnswerDetailView.as_view(), name="answer-detail"),
+    path("answers/<int:pk>/", AnswerDetailView.as_view(), name="answer-detail"),
     path("bookmarks/", BookmarkListCreateView.as_view(), name="bookmarks-list"),
     path("admin/", admin.site.urls),
     path("auth/", include("djoser.urls")),
