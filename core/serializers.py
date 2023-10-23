@@ -96,18 +96,19 @@ class QuestionWritableSerializer(TaggitSerializer, serializers.ModelSerializer):
 
 
 class QuestionNestedSerializer(serializers.ModelSerializer):
+    author = serializers.SlugRelatedField(slug_field="username", read_only=True)
+
     class Meta:
         model = Question
-        fields = [
-            "id",
-            "title",
-        ]
+        fields = ["id", "title", "author"]
 
 
 class AnswerNestedSerializer(serializers.ModelSerializer):
+    author = serializers.SlugRelatedField(slug_field="username", read_only=True)
+
     class Meta:
         model = Answer
-        fields = ["id", "text", "question"]
+        fields = ["id", "text", "question", "author"]
 
 
 class BookmarkListSerializer(serializers.ModelSerializer):
